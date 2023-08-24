@@ -28,27 +28,23 @@ import sys
 import os
 import tempfile
 
-reg_start = "loop start: (\d+) samples"
-reg_end = "loop end: (\d+) samples"
+reg_start = "loop start: (\\d+) samples"
+reg_end = "loop end: (\\d+) samples"
 
 if __name__ == '__main__':
-
-    in_file = ""
-    out_file = ""
-
     if len(sys.argv) < 2:
         print("Syntax:\n\n%s <input file> [<output file>]\n\n" % sys.argv[0])
         exit(1)
 
     in_file = sys.argv[1]
+    out_file = ""
+
     if len(sys.argv) < 3:
         out_file = sys.argv[1]
-        if out_file.endswith(".brstm"):
-            out_file = out_file.removesuffix(".brstm") + ".ogg"
-        elif out_file.endswith(".ras"):
-            out_file = out_file.removesuffix(".ras") + ".ogg"
-        elif out_file.endswith(".bwav"):
-            out_file = out_file.removesuffix(".bwav") + ".ogg"
+        dot = out_file.rindex('.')
+
+        if dot >= 0:
+            out_file = out_file[:dot] + ".ogg"
         else:
             out_file = out_file + ".ogg"
 
